@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+# ChineseChess
 
 You can use the [editor on GitHub](https://github.com/zxl929496/zxl929496.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown 
 
