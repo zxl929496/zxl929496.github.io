@@ -1,4 +1,7 @@
-# ChineseChess
+# ChineseChesse
+![象棋](/Users/lovexl/Desktop/xiangqi.png)
+#### 导语
+> 这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，只需要单击鼠标就可以控制棋子的移动。可以不断提高机器的智能，让你不仅仅是娱乐，还可以不断提高棋艺。另外，在下棋的同时还可以听一曲高山流水；当然了，不想听的也可以点击暂停播放。目前已经在AppStore上架，主要针对Iphone手机用户，可以搜索“象棋宝宝”免费下载。
 
 You can use the [editor on GitHub](https://github.com/zxl929496/zxl929496.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown 
 
