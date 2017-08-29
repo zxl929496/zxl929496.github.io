@@ -443,9 +443,7 @@ func gameAlert()
 ```
  func newBoardButton()
 {
-    ...
     butt.addTarget(self, action: #selector(ViewController.Alert), for: .touchUpInside)
-    ...
 }
 func Alert()
     {
