@@ -1,10 +1,10 @@
 ## 导语
-这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，用户只需要单击鼠标就可以控制棋子的移动，让你不仅仅是娱乐，还可以不断提高棋艺。目前已经在AppStore上架，主要 针对iphone手机用户，可以搜索“**象棋宝宝**”免费下载。
+这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，用户只需要单击鼠标就可以控制棋子的移动，让你不仅仅是在娱乐，还可以不断提高棋艺。目前已经在AppStore上架，主要针对iphone手机用户，可以搜索“**象棋宝宝**”免费下载。
 ## 项目背景
-学习iOS开发以来，"象棋宝宝"是我的第一个项目。一路过来，遇到了很多的难题，很多的第一次；可以说是在不断地解决难题，不断进步的过程中，这个项目才能有现在的成果；当然了，为了让它变得更好，还需要不断地优化。
+学习iOS开发以来，"象棋宝宝"是我的第一个项目。一路过来，遇到了很多的难题，很多的第一次，可以说是在不断地解决难题，不断进步的过程中，这个项目才能有现在的成果；当然了，为了让它变得更好，还需要不断地优化。
 ## 开发过程
 ### 一界面
-这里我没有使用Automaticlayout来实现界面，是通过代码来实现的。基于面相对象的思想，我创建了一个Checkerboard.swift的类文件，生成了棋盘图片vImg、棋盘在ViewController的原点位置tlx、tly、棋盘的宽高width、height等属性，用init（）构造函数来初始化这些属性，在ViewController.swift里形成一个棋盘的实例变量CheckB，在viewDidload里加载棋盘图片。
+这里我没有使用Main.storydoard来实现界面，是通过代码来实现的。基于面相对象的思想，我创建了一个Checkerboard.swift的类文件，生成了棋盘图片vImg、棋盘在ViewController的原点位置tlx、tly、棋盘的宽高width、height等属性，用init（）构造函数来初始化这些属性，在ViewController.swift里形成一个棋盘的实例变量CheckB，在viewDidload里加载棋盘图片。
 ```
 class Checkerboard
 {
@@ -23,14 +23,16 @@ class Checkerboard
 }
 class ViewController:UIViewController
 {
-    static var checkB = Checkerboard(name: "timg1", x: 10, y: 60, wd: Int(UIScreen.main.bounds.size.width - 20), hg: Int(UIScreen.main.bounds.size.height - 120))  //UIScreen.main.bound获取整个屏幕的width,height.
-    override func viewDidLoad() {
+    static var checkB = Checkerboard(name: "timg1", x: 10, y: 60, wd: Int(UIScreen.main.bounds.size.width - 20), hg: Int(UIScreen.main.bounds.size.height - 120))  //UIScreen.main.bound.size获取整个屏幕的width,height.
+   
+    override func viewDidLoad() 
+    {
         super.viewDidLoad()
         self.view.addSubview(ViewController.checkB.getvImg())
     }//加载棋盘Imageview到view上
 }
 ```
-现在ViewController界面已经有了棋盘，我用同样的方法创建了Piece.swift文件，生成了棋子的颜色color、在棋盘的行列row、column、最初的行列startrow、startcolumn、图片imgv、威力值pow、灵活度权值flwt等，用init()构造函数来初始化每一个棋子；在ViewController.swift文件里生成了所有棋子初始位置的pieces数组。我的图片都是通过在Assets.xcassets点击右键import本地文件。现在，我的棋盘棋子已经在最初始的位置了。
+现在ViewController界面已经有了棋盘，我用同样的方法创建了Piece.swift文件，生成了棋子的颜色color、在棋盘的行列row、column、最初的行列startrow、startcolumn、图片imgv、威力值pow、灵活度权值flwt等，用init()构造函数来初始化每一个棋子；在ViewController.swift文件里生成了所有棋子初始位置的pieces数组。我的图片都是通过在Assets.xcassets点击右键import本地文件。现在，棋子已经在棋盘最初始的位置了。
 ```
 class Piece: NSObject
 {
@@ -168,7 +170,7 @@ class ViewController: UIViewController
     private var firsttap = false//用来判断第一次点击的是棋盘（false）还是棋子(true)
     private var isBlackMove = true//判断目前是黑棋走（true）还是红棋（false）走
     
-    //棋盘点击只有一种情况：点击终点走棋
+    //棋盘点击响应只有一种情况：点击终点走棋
     func touchcb(sender: UITapGestureRecognizer)
     {
         if !isBlackMove
@@ -282,8 +284,8 @@ class Pieces: NSObject
             }
         }
         //棋子移动位置，棋子属性row、column和imgv的origin也要变
-        ViewController.checkbd[cr][cco] = nil
-        ViewController.checkbd[cr][cco] = ViewController.checkbd[row][column]
+        ViewController.checkbd[cr][cco] = nil //终点是空，直接走子
+        ViewController.checkbd[cr][cco] = ViewController.checkbd[row][column]
         ViewController.checkbd[row][column] = nil
         ViewController.checkbd[cr][cco]?.setrow(cbrow: cr)
         ViewController.checkbd[cr][cco]?.setcolumn(cbcolumn: cco)
@@ -323,7 +325,7 @@ for j in 0..<ViewController.pieces.count
             }
         }
 ```
-第二，“走一步看三步”，怎么做到呢？先看看走一步是怎么搜索的。假设现在用户（黑棋）走了一步，机器（红棋）应该走哪一步是最佳的呢？机器将所有can move的都试走一遍，但不在界面反应，记录每走一步后形成的局面分数，棋子再还原,最后比较出分数最高的作为最佳实际走的选择。走两步呢，这里我用的是极大值极小值算法：max（红棋取最大值）、min（黑棋取最小值）代表对弈双方，当轮到红棋走时，应该考虑到最好的情况，局面分数取最大；当轮到黑棋走时，应该考虑最坏的情况，局面分数取最小；交替使用这两种情况传递倒推值，使用递归的方法。每次在叶子节点中每个叶子节点形成的局面计算每个叶子节点的分值，如果叶子节点的跟节点是红棋，那么返回最大值；黑棋返回最小值；依次递归向上。但是，当搜索层数越多，节点就越多，时间要的多，棋子反应速度就降下去了，所以，需要比较一些不需要再搜索下去的节点删掉，需要用到极大值极小值的剪枝。假设搜两层，第一层红棋找最大值返回根节点；第二层是黑棋，由第一层的每一个节点作为根节点，每一个根节点下的所有子叶子节点组成，每一根节点下的叶子节点找最小值返回根节点第一层；如果我们知道了第二层第一个返回根节点第一层的值，那么，是不是表示，第一层其他根节点的叶子节点只要有分值比返回值小，返回给根节点的一定小于或等于它，而在第一层却要返回最大值给第一层的根节点时一定会被淘汰掉，所以，可以直接把叶子节点和它所在的根节点直接剪枝，不需要计算。
+第二，“走一步看三步”，怎么做到呢？先看看走一步是怎么搜索的。假设现在用户（黑棋）走了一步，机器（红棋）应该走哪一步是最佳的呢？机器将所有can move的都试走一遍，但不在界面反应，记录每走一步后形成的局面分数，再还原,最后比较出分数最高的作为最佳实际走的选择。走两步呢，这里我用的是极大值极小值算法：max（红棋取最大值）、min（黑棋取最小值）代表对弈双方，当轮到红棋走时，应该考虑到最好的情况，局面分数取最大；当轮到黑棋走时，应该考虑最坏的情况，局面分数取最小；交替使用这两种情况传递倒推值，使用递归的方法。每一个叶子节点是一个局面，如果叶子节点的根节点是红棋，那么计算所有叶子节点的分值返回最大值给对应的根节点；黑棋返回最小值；依次递归向上。但是，当搜索层数越多，节点就越多，时间要的多，棋子反应速度就降下去了，所以，需要比较一些不需要再搜索下去的节点删掉，需要用到极大值极小值的剪枝：假设搜两层，第一层红棋找最大值返回根节点；第二层是黑棋，由第一层的每一个节点作为根节点，每一个根节点下的所有子叶子节点组成，每一根节点下的叶子节点找最小值返回根节点第一层；如果我们知道了第二层第一个返回根节点第一层的值，那么，是不是表示，第一层其他根节点的叶子节点只要有分值比返回值小，返回给根节点的一定小于或等于它，而在第一层却要返回最大值给第一层的根节点时一定会被淘汰掉，所以，可以直接把叶子节点和它所在的根节点直接剪枝，不需要计算。
 ```
 func dfs(level: Int, lastlevel: Int, bs: Int) -> Int
     {
@@ -341,9 +343,8 @@ func dfs(level: Int, lastlevel: Int, bs: Int) -> Int
                 let end  = ViewController.checkbd[step.ex][step.ey]
                 start!.tryMove(cr: step.ex, cco: step.ey)//试走
                 let score = dfs(level: level + 1, lastlevel: lastlevel, bs: result)//算分只值
-                start!.revert(pr: step.ex, pco: step.ey, cr: step.sx, cco: step.sy, tps: end)//还原
-                
-                if level % 2 == 0  //max
+                start!.revert(pr: step.ex, pco: step.ey, cr: step.sx, cco: step.sy, tps: end)//还原
+                if level % 2 == 0  //max
                 {
                     if(score > result)
                     {
@@ -373,19 +374,22 @@ func dfs(level: Int, lastlevel: Int, bs: Int) -> Int
  DispatchQueue.global().async   //后台线程计算机器最佳走法
  {
      self.mechineMove()
+ }
+ 
  func mechineMove() 
  {
     let _ = dfs(level: 0, lastlevel: 3, bs: Int.max)
-        DispatchQueue.main.async //返回主线程更新UI{
+    DispatchQueue.main.async //返回主线程更新UI
+    {
         ViewController.checkbd[self.bestmoves.sx][self.bestmoves.sy]!.domove(cr: self.bestmoves.ex, cco: self.bestmoves.ey)
-            self.isBlackMove = true
-            if ViewController.checkB.getGameOver() == true
-            {
-                self.gameAlert()
-                ViewController.checkB.setGameOver(gameov: false)
-            }
-        
-        }
+        self.isBlackMove = true
+        if ViewController.checkB.getGameOver() == true
+        {
+            self.gameAlert()
+            ViewController.checkB.setGameOver(gameov: false)
+        }
+     }
+  }      
 ```
 ### 三 动画警告框
 不管哪一方被**将军**，都表示这局结束了，要怎样继续重新来一局呢？这里我通过在touchcb() 和touchPiece() 调用gameAlert（）弹出一个警告框，用户点击“**重来**”，棋面重新恢复。棋面怎么恢复到最初的状态呢？很简单，我只需要确定棋盘view上是没有棋子的；棋子view的每一个棋子在最开始的行列上；
@@ -402,7 +406,7 @@ func gameAlert()
         {
             sucesser = "红棋赢了"
         }
-        let alertController = UIAlertController(title: "系统提示"                           message: sucesser, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "系统提示", message: sucesser, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "重来", style: .default, handler: {
             action in
             self.presentingViewController?.dismiss(animated: true, completion: nil)
@@ -435,19 +439,20 @@ func gameAlert()
     }
 ```
 ### 四 “新局”
-当你玩到中途想重来一局时，只需要点击屏幕下方的button就可以了。我添加了一个“新局”button，点击以后会跳出警告框，点击确定就可以重来，‘点击取消不会改变什么。我在button里添加了一个addTarget函数来响应到
-Alert函数弹出警告框。
+当你玩到中途想重来一局时，只需要点击屏幕下方的button就可以了。我添加了一个“新局”button，点击以后会跳出警告框，点击"确定"就可以重来，点击"取消"不会改变什么。我在button里添加了一个addTarget函数来响应到Alert函数弹出警告框。
 ```
  func newBoardButton()
 {
-    butt.addTarget(self, action: #selector(ViewController.Alert), for: .touchUpInside)
+    ...
+    butt.addTarget(self, action: #selector(ViewController.Alert), for: .touchUpInside)
+    ...
 }
 func Alert()
     {
         let alertController = UIAlertController(title: "新局", message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "确定", style: .default, handler: {
             action in
-            code //代码和将军后重来是一样的
+            code //代码和"将军"后重来是一样的
             })
     let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(okAction)
@@ -456,17 +461,18 @@ func Alert()
     }
 ```
 ### 五 背景音乐
-为了用户在游戏中不会那么的单调，我添加了工程背景音乐，在函数playMusic()导入MP3格式的音乐。在函数voiceButton()添加一个button，有两种状态：播放、停止；
+为了用户在游戏中不会那么的单调,我添加了工程背景音乐，在函数playMusic()导入MP3格式的音乐。在函数voiceButton()添加一个button，有两种状态：播放、停止；
 ```
 import UIKit
 import AVFoundation  //引入新的AVFoundation框架
 class ViewController: UIViewController 
 {
-    var audioplayer= AVAudioPlayer() //定义AVAudioPlayer类型的全局变量并初始化
+    var audioplayer = AVAudioPlayer() //定义AVAudioPlayer类型的全局变量并初始化
     var button: UIButton
+    
     func playMusic()
     {
-        let musicPath = Bundle.main.path(forResource: "于秋旋-高山流水", ofType: 			"mp3")
+        let musicPath = Bundle.main.path(forResource: "于秋旋-高山流水", ofType: "mp3")
         let url = NSURL(fileURLWithPath: musicPath!)
 //指定音乐入径 URL
        	do
@@ -485,6 +491,7 @@ class ViewController: UIViewController
     	    print(error)
        	}
     }
+    
     func voiceButton()
 // 手动添加控制音乐的点击按钮
     {
@@ -492,8 +499,9 @@ class ViewController: UIViewController
         let bimg = UIImage(named: "timgb")
     	button.setImage(bimg, for: UIControlState.normal)//初始化button	
    	 	button.addTarget(self, action:#selector(ViewController.voice), for: .touchUpInside)//添加点击事件 voice
-       		 self.view.addSubview(button)// 将button添加到view上
+        self.view.addSubview(button)// 将button添加到view上
    	 }
+     
     func voice()
     {
         if !audioplayer.isPlaying
