@@ -1,10 +1,10 @@
 #### 导语
 
-> 这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，用户只需要单击鼠标就可以控制棋子的移动，让你不仅仅是娱乐，还可以不断提高棋艺。目前已经在AppStore上架，主要针对iphone手机用户，可以搜索“**象棋宝宝**”免费下载。
+> 这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，用户只需要单击鼠标就可以控制棋子的移动，让你不仅仅是娱乐，还可以不断提高棋艺。目前已经在AppStore上架，主要 针对iphone手机用户，可以搜索“**象棋宝宝**”免费下载。
 ## 项目背景
 学习iOS开发以来，"象棋宝宝"是我的第一个项目。一路过来，遇到了很多的难题，很多的第一次；可以说是在不断地解决难题，不断进步的过程中，这个项目才能有现在的成果；当然了，为了让它变得更好，还需要不断地优化。
 ## 开发过程
-### 一 界面
+### 一界面
 这里我没有使用Automaticlayout来实现界面，是通过代码来实现的。基于面相对象的思想，我创建了一个Checkerboard.swift的类文件，生成了棋盘图片vImg、棋盘在ViewController的原点位置tlx、tly、棋盘的宽高width、height等属性，用init（）构造函数来初始化这些属性，在ViewController.swift里形成一个棋盘的实例变量CheckB，在viewDidload里加载棋盘图片。
 ```
 class Checkerboard
@@ -462,7 +462,8 @@ func Alert()
         self.present(alertController, animated: true, completion: nil)
     }
 ```
-### 五 为了用户在游戏中不会那么的单调，我添加了工程背景音乐，在函数playMusic()导入MP3格式的音乐。在函数voiceButton()添加一个button，有两种状态：播放、停止；
+### 五 背景音乐
+为了用户在游戏中不会那么的单调，我添加了工程背景音乐，在函数playMusic()导入MP3格式的音乐。在函数voiceButton()添加一个button，有两种状态：播放、停止；
 ```
 import UIKit
 import AVFoundation  //引入新的AVFoundation框架
