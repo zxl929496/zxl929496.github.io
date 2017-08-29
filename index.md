@@ -1,7 +1,8 @@
 # ChineseChesse
-![象棋](/Users/lovexl/Desktop/xiangqi.png)
+![image](/Users/lovexl/Desktop/xq.png)
 #### 导语
-> 这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，只需要单击鼠标就可以控制棋子的移动。可以不断提高机器的智能，让你不仅仅是娱乐，还可以不断提高棋艺。另外，在下棋的同时还可以听一曲高山流水；当然了，不想听的也可以点击暂停播放。目前已经在AppStore上架，主要针对Iphone手机用户，可以搜索“象棋宝宝”免费下载。
+
+> 这是一款人机对弈的象棋游戏。它以简单的棋盘棋子作为整个界面，布局简单清晰。用户执黑棋先行，机器执红棋后行，用户只需要单击鼠标就可以控制棋子的移动，让你不仅仅是娱乐，还可以不断提高棋艺。目前已经在AppStore上架，主要针对iphone手机用户，可以搜索“**象棋宝宝**”免费下载。
 ## 项目背景
 学习iOS开发以来，"象棋宝宝"是我的第一个项目。一路过来，遇到了很多的难题，很多的第一次；可以说是在不断地解决难题，不断进步的过程中，这个项目才能有现在的成果；当然了，为了让它变得更好，还需要不断地优化。
 ## 开发过程
@@ -440,10 +441,11 @@ func gameAlert()
         self.present(alertController, animated: true, completion: nil)//显示提示框
     }
 ```
-```
-### 四 当你玩到中途想重来一局时，只需要点击屏幕下方的button就可以了。我添加了一个“新局”button，点击以后会跳出警告框，点击确定就可以重来，‘点击取消不会改变什么。我在button里添加了一个addTarget函数来响应到
+
+### 四 “新局”
+当你玩到中途想重来一局时，只需要点击屏幕下方的button就可以了。我添加了一个“新局”button，点击以后会跳出警告框，点击确定就可以重来，‘点击取消不会改变什么。我在button里添加了一个addTarget函数来响应到
 Alert函数弹出警告框。
-```
+
 ```
  func newBoardButton()
 {
@@ -462,9 +464,7 @@ func Alert()
         self.present(alertController, animated: true, completion: nil)
     }
 ```
-```
 ### 五 为了用户在游戏中不会那么的单调，我添加了工程背景音乐，在函数playMusic()导入MP3格式的音乐。在函数voiceButton()添加一个button，有两种状态：播放、停止；
-```
 ```
 import UIKit
 import AVFoundation  //引入新的AVFoundation框架
@@ -522,8 +522,5 @@ class ViewController: UIViewController
     }	
 }
 ```
-```
+#### 总结
 目前，“象棋宝宝”也就简单地实现了这几个基本功能，还需要不断完善，让功能更加丰富，提高用户体验。
-```
-
-
